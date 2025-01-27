@@ -10,7 +10,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Win32;
 using QRCoder;
-
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Csv2QrCode
 {
@@ -128,8 +129,18 @@ namespace Csv2QrCode
                         {
                             byte[] qrCodeImage = qrCode.GetGraphic(20);
 
-                            var fileName = Path.Combine(outputDirectory, $"{index++:D5}.png");
-                            File.WriteAllBytes(fileName, qrCodeImage);
+                            // Create a Bitmap from the byte array
+                            using (MemoryStream ms = new MemoryStream(qrCodeImage))
+                            using (Bitmap bitmap = new Bitmap(ms))
+                            {
+                                // Set DPI to 300
+                                bitmap.SetResolution(300, 300);
+
+                                var fileName = Path.Combine(outputDirectory, $"{index++:D5}.png");
+
+                                // Save the image with the new DPI
+                                bitmap.Save(fileName, ImageFormat.Png);
+                            }
                         }
                     }
                 });
