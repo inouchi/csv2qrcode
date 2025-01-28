@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="csv2qrcode" Height="150" Width="400">
+        Title="csv2qrcode" Height="150" Width="450">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -13,29 +13,22 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- CSVファイル選択 -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,20">
             <TextBox
-                Width="280"
+                Width="300"
                 Text="{Binding CsvFilePath, UpdateSourceTrigger=PropertyChanged}"
                 IsReadOnly="True" />
-            
+
             <Button
                 Content="参照"
                 Command="{Binding SelectFileCommand}"
-                Width="50"
-                Margin="10,0,0,0"/>
+                Width="75"
+                Margin="20,0,0,0"/>
         </StackPanel>
-
-        <!-- プログレスバー -->
-        <ProgressBar
-            Grid.Row="1"
-            Height="20"
-            Visibility="{Binding IsGenerating, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <!-- QRコード出力ボタン -->
         <Button
@@ -43,7 +36,7 @@
             Content="QRコード出力"
             Command="{Binding GenerateQrCodeCommand}"
             IsEnabled="{Binding CanGenerateQrCode}"
-            Width="100"
+            Width="120"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />
     </Grid>
