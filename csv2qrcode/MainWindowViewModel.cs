@@ -113,7 +113,7 @@ namespace csv2qrcode
                         using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrData, QRCodeGenerator.ECCLevel.Q))
                         using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
                         {
-                            byte[] qrCodeImage = qrCode.GetGraphic(10);
+                            byte[] qrCodeImage = qrCode.GetGraphic(20);
 
                             // Create a Bitmap from the byte array
                             using (MemoryStream ms = new MemoryStream(qrCodeImage))
