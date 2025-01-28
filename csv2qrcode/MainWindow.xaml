@@ -3,41 +3,69 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="csv2qrcode" Height="150" Width="450">
+        Title="csv2qrcode" Height="180" Width="450">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <!-- 外側の Grid (親) -->
+    <Grid>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- CSVファイル選択 -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,20">
-            <TextBox
+            <!-- CSVファイル選択 -->
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,20">
+                <TextBox
                 Width="300"
                 Text="{Binding CsvFilePath, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="16"
                 IsReadOnly="True" />
 
-            <Button
+                <Button
                 Content="参照"
                 Command="{Binding SelectFileCommand}"
                 Width="75"
                 Margin="20,0,0,0"/>
-        </StackPanel>
+            </StackPanel>
 
-        <!-- QRコード出力ボタン -->
-        <Button
+            <!-- QRコード出力ボタン -->
+            <Button
             Grid.Row="2"
             Content="QRコード出力"
             Command="{Binding GenerateQrCodeCommand}"
             IsEnabled="{Binding CanGenerateQrCode}"
             Width="120"
+            Margin ="0, 10, 0, 0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />
+
+        </Grid>
+
+        <!-- オーバーレイ (黒色) -->
+        <Rectangle
+            Fill="Black" 
+            Opacity="0.6" 
+            Visibility="{Binding IsGenerating, Converter={StaticResource BooleanToVisibilityConverter}}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" />
+
+        <!-- プログレスバー -->
+        <ProgressBar
+            IsIndeterminate="True"
+            Style="{StaticResource MaterialDesignCircularProgressBar}"
+            Visibility="{Binding IsGenerating, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Width="50"
+            Value="35"
+            Foreground="White"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"/>
+
     </Grid>
+
 </Window>
