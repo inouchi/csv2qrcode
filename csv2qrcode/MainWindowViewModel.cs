@@ -122,7 +122,7 @@ namespace csv2qrcode
                                 // Set DPI to 300
                                 bitmap.SetResolution(300, 300);
 
-                                var fileName = Path.Combine(outputDirectory, $"{index++:D5}.png");
+                                var fileName = Path.Combine(outputDirectory, $"{index++}.png");
 
                                 // Save the image with the new DPI
                                 bitmap.Save(fileName, ImageFormat.Png);
